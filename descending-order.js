@@ -12,3 +12,22 @@ Input: `1254859723`
 Output: `9875543221`
 
 */
+
+function descendingOrder(n)
+{
+  var s = n.toString();
+  
+  s = s.split("");
+  s.sort(function(a, b) {
+    
+    if (a < b)
+      return 1;
+    
+    if (a > b)
+      return -1;
+    
+    return 0;
+  });
+  
+  return Number(s.join(""));
+}

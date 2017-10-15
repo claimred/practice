@@ -18,3 +18,27 @@ solution "camelCasing" --  => should return "camel Casing"
 ```csharp
 Kata.BreakCamelCase("camelCasing") => "camel Casing"
 ```*/
+
+// complete the function
+function solution(string) 
+{
+  var b = 0;
+  var res = [];
+  
+  for (var i = 0; i < string.length; i++)
+  {
+    if (string[i] >= 'A' && string[i] <= 'Z')
+    {
+      res.push(string.substring(b, i));
+      b = i;
+    }
+    
+  }
+  
+  res.push(string.substring(b, string.length));
+  
+  var ress = res.join(" ");
+  
+  return ress;
+    
+}

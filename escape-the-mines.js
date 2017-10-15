@@ -43,3 +43,102 @@ let map = [[True, False],
 solve map (0,0) (1,1)
 -- Should return [R, D]
 ```*/
+
+function Queue() {
+    this._oldestIndex = 1;
+    this._newestIndex = 1;
+    this._storage = {};
+}
+ 
+Queue.prototype.size = function() {
+    return this._newestIndex - this._oldestIndex;
+};
+ 
+Queue.prototype.enqueue = function(data) {
+    this._storage[this._newestIndex] = data;
+    this._newestIndex++;
+};
+ 
+Queue.prototype.dequeue = function() {
+    var oldestIndex = this._oldestIndex,
+        newestIndex = this._newestIndex,
+        deletedData;
+ 
+    if (oldestIndex !== newestIndex) {
+        deletedData = this._storage[oldestIndex];
+        delete this._storage[oldestIndex];
+        this._oldestIndex++;
+ 
+        return deletedData;
+    }
+};
+
+function getDirName(a, b)
+{
+  if (a.x - b.x < 0)
+    return "left";
+  
+  if (a.x - b.x > 0)
+    return "right";
+  
+  if (a.y - b.y < 0)
+    return "up";
+  
+  if (a.y - b.y > 0)
+    return "down";
+}
+
+function solve(map, miner, exit)
+{
+  var queue = new Queue(), dir = [ [1, 0], [0, 1], [-1, 0], [0, -1] ], 
+      visited = new Array(map.length);
+  
+  for (var i = 0; i < map.length; i++)
+    visited[i] = new Array(map[0].length);
+  
+  for (var i = 0; i < map.length; i++)
+    for (var j = 0; j < map[0].length; j++)
+      visited[i][j] = { f: false, parent: { x: -1, y: -1 } };
+  
+  queue.enqueue(miner);
+  
+  while (queue.size() > 0)
+  {
+    var p = queue.dequeue();
+    
+    visited[p.x][p.y].f = true;        
+    
+    if (p.x == exit.x && p.y == exit.y)
+      break;
+    
+    for (var i = 0; i < 4; i++)
+    {
+      var n = { x: p.x + dir[i][0], y: p.y + dir[i][1] };
+      
+      if (n.x >= 0 && n.x < map.length && n.y >= 0 && n.y < map[0].length)
+        if (map[n.x][n.y] && !visited[n.x][n.y].f)
+        {
+          queue.enqueue(n);    
+          visited[n.x][n.y].parent.x = p.x;
+          visited[n.x][n.y].parent.y = p.y;          
+        }
+    }    
+  }
+  
+  var n = exit, ans = [], p;
+  
+  while (true)
+  {
+    p = visited[n.x][n.y].parent;
+    
+    if (p.x == -1 && p.y == -1)
+      break;
+    
+    ans.push(getDirName(n, p));
+    n = p;
+  }
+  
+  ans.reverse();
+  
+  return ans;
+}

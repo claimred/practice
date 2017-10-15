@@ -18,3 +18,78 @@ BAAA = 4<br />
 QUESTION = 24572<br />
 BOOKKEEPER = 10743
 */
+
+//should be lookup table
+function factorial(n) 
+{
+  var r = 1, i = 0;;
+  
+  for (i = 0; i < n; i++)
+    r *= (i + 1);
+  
+  return r;
+}
+
+function multifactorial(n, cc)
+{
+  var r = factorial(n), c = 1;
+  
+  for (var i = 0; i < 30; i++)
+    c *= factorial(cc[i]);
+  
+  return r / c;
+}
+
+function findMaxChar(perm)
+{
+  var maxch = perm[0];
+  
+  for (var i = 0; i < perm.length; i++)
+  {
+    if (perm[i] < maxch)
+      maxch = perm[i];
+  }
+  
+  return maxch;
+}
+
+function listPosition(word) 
+{
+  var perm = word.split(""),
+      maxch;
+      
+  maxch = findMaxChar(perm);
+  
+  for (var i = 0; i < perm.length; i++)
+  {
+    perm[i] = perm[i].charCodeAt(0) - maxch.charCodeAt(0);    
+  }
+  
+  var cc = new Array(30);
+  
+  for (var i = 0; i < 30; i++)
+    cc[i] = 0;
+  
+  for (var i = 0; i < perm.length; i++)
+    cc[perm[i]]++;
+  
+  var n = perm.length, num = 0;
+  
+  for (var i = 0; i < n; i++)
+  {
+    for (var j = 0; j < perm[i]; j++)
+    {
+      if (cc[j] > 0)
+      {
+        cc[j]--;
+        num += multifactorial(n - i - 1, cc);
+        cc[j]++;
+      }
+    }
+    
+    if (cc[perm[i]] > 0)
+      cc[perm[i]]--;
+  }
+  
+  return num + 1;
+}

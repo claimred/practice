@@ -35,3 +35,124 @@ Good luck!
 
 After you master this kata, you may try to <a href="http://www.codewars.com/kata/decode-the-morse-code-for-real">Decode the Morse code, for real</a>.
 */
+
+decodeMorseWord = function(morseWord)
+{
+  var t = morseWord.split(" "), res = "";
+      
+  for (var i = 0; i < t.length; i++)
+  {    
+    var v = MORSE_CODE[t[i]];
+      
+    res += v;
+  }
+        
+  return res;
+};
+
+
+decodeMorse = function(morseCode) 
+{
+  morseCode = morseCode.replace(/^\s+|\s+$/g, "");
+  var words = morseCode.split("   "), res = "";
+  
+  for (var i = 0; i < words.length; i++)
+  {  
+    var v = decodeMorseWord(words[i]);    
+    
+    res += v + " ";
+  }
+    
+  res = res.slice(0, -1);
+  
+  return res;
+};
+
+var findUnit = function(bits) {
+  
+  var res = "", a = 0, b = 0, i = 0;
+  
+  while (bits[i] == '1')
+    a++, i++;
+  
+  while (i < bits.length)
+  {  
+    while (bits[i] != '1')
+      i++;
+    
+    while (bits[i] == '1')
+    {
+      b++, i++;
+    }
+    
+    if (i >= bits.length)
+      break;
+    
+    if (b > 0 && a != b)
+      break;
+    
+    if (b > 0 && a == b)
+      b = 0;
+  }
+  
+  if (a == b)
+  {
+    if (a % 3 == 0)
+      return a / 3;
+    else
+      return a;
+  }
+      
+  if (b == 0)
+    return a;   
+  
+  if (a < b)
+    return a;
+  else
+    return b;
+}
+
+
+var decodeBits = function(bits){
+    
+  bits = bits.replace(/0+$/g, "");
+  bits = bits.replace(/\b0+/g, "");
+    
+  var unit = findUnit(bits);    
+  
+  var dash = "", dot = "";
+  
+  for (var i = 0; i < unit; i++)
+    dot += '1';
+  
+  for (var j = 0; j < 3; j++)
+    dash += dot;
+  
+  var reg = new RegExp(dash, "g");
+  bits = bits.replace(reg, '-');
+  
+  reg = new RegExp(dot, "g")
+  bits = bits.replace(reg, '.');
+  
+  var p1 = "", p2 = "", p3 = "";
+  
+  for (var i = 0; i < unit; i++)
+    p1 += '0';
+  
+  for (var j = 0; j < 3; j++)
+    p2 += p1;
+  
+  for (var j = 0; j < 7; j++)
+    p3 += p1;
+  
+  reg = new RegExp(p3, "g")
+  bits = bits.replace(reg, '   ');
+  
+  reg = new RegExp(p2, "g")
+  bits = bits.replace(reg, ' ');
+  
+  reg = new RegExp(p1, "g")
+  bits = bits.replace(reg, '');
+  
+  return bits;
+}

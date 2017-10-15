@@ -12,3 +12,20 @@ The program reports the nth day (as an integer)
 on which the evaporator will be out of use.
 
 **Note** : Content is in fact not necessary in the body of the function "evaporator", you can use it or not use it, as you wish. Some people might prefer to reason with content, some other with percentages only. It's up to you but you must keep it as a parameter because the tests have it as an argument.*/
+
+int evaporator(double content, double evap_per_day, double threshold) 
+{    
+    int k = 0;
+    double z = content / 100.0f * evap_per_day;
+    
+    threshold = content / 100.0f * threshold;
+    
+    while (content > threshold)
+    {
+      content -= z;
+      z = content / 100.0f * evap_per_day;
+      k++;
+    }
+    
+    return k;
+}

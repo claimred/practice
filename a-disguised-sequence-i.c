@@ -14,3 +14,11 @@ You can take two points of view to do this kata:
 
 - the second one - not at all mandatory, but as a complement - is to get a bit your head around and find which sequence is hidden behind <code>u<sub>n</sub></code>. 
 */
+
+#include <math.h>
+
+unsigned long long fcn(int n) {
+    unsigned long long res = pow(2, n);
+    
+    return res;
+}

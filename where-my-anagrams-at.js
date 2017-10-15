@@ -62,3 +62,19 @@ anagrams("laser", c("lazing", "lazy", "lacer")) => character(0) # no anagram, re
 ```
 
 */
+
+function anagrams(word, words) 
+{
+  var res = [];
+  word = word.split("").sort().join('');
+  
+  for (var i = 0; i < words.length; i++)
+  {
+    var w = words[i].split("").sort().join('');
+    
+    if (w == word)
+      res.push(words[i]);
+  }
+  
+  return res;   
+}

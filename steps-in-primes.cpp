@@ -50,3 +50,47 @@ A "gap" is more restrictive: there must be no primes in between
 For Go: nil slice is expected when there are no `step` between m and n.
 Example: step(2,4900,4919) --> nil
 */
+
+class StepInPrimes
+{
+public:
+
+   static bool isPrime( long long m )
+   {
+      if (m <= 1)
+         return false;
+
+      if (m <= 3)
+         return true;
+
+      if (m % 2 == 0 || m % 3 == 0)
+         return false;
+
+      long long i = 5;
+
+      while (i * i <= m)
+      {
+         if (m % i == 0 || m % (i + 2) == 0)
+            return false;
+         i += 6;
+      }
+
+      return true;
+      
+   }
+
+    // if there are no such primes return {0, 0}
+    static std::pair <long long, long long> step(int g, long long m, long long n)
+    {
+       for (long long i = m; i <= n; i++)
+       {
+          if (isPrime(i))
+          {
+             if (isPrime(i + g))
+                return std::pair<long long, long long>(i, i + g);
+          }
+       }
+
+       return std::pair<long long, long long>(0, 0);
+    }
+};

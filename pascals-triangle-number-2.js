@@ -34,3 +34,31 @@ eg
           [1  3  3  1]
                             
 here you get the 3 by adding the 2 and 1 above it.*/
+
+function pascal(depth) 
+{
+  var res = [];
+  
+  if (depth == 1)
+    return JSON.stringify([[1]]);
+  
+  depth--;
+  
+  res.push([1]);  
+  res.push([1, 1]);
+  
+  for (var i = 2; i <= depth; i++)
+  {
+    var cur = [1], prev = res[i - 1];
+    
+    for (var j = 0; j < prev.length - 1; j++)
+      cur.push(prev[j] + prev[j + 1])
+    
+    cur.push(1);
+    
+    res.push(cur);
+  }
+  
+  return JSON.stringify(res);
+  
+}

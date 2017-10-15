@@ -100,3 +100,30 @@ dig-pow 46288 3 should return 51 since 4³ + 6⁴+ 2⁵ + 8⁶ + 8⁷ = 2360688 
 
 
 */
+
+
+function digPow(n, p) {
+  var digits = [], sum = 0;
+  
+  var d = n;
+  
+  while (true)
+  {
+    digits.push(d % 10);
+    d = Math.floor(d / 10);
+    
+    if (d == 0)
+      break;
+  }
+  
+  for (var i = 0; i < digits.length; i++)
+  {
+    sum += Math.pow(digits[digits.length - i - 1], p);    
+    p++;
+  }
+  
+  if (sum % n == 0)
+    return Math.floor(sum / n);
+  else
+    return -1;  
+}

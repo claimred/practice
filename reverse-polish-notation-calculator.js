@@ -10,3 +10,46 @@ Empty expression should evaluate to `0`.
 Valid operations are `+`, `-`, `*`, `/`.
 
 You may assume that there won't be exceptional situations (like stack underflow or division by zero).*/
+
+function doOp(a, b, op)
+{
+  a = parseFloat(a);
+  b = parseFloat(b);
+  
+  if (op == '+')
+    return a + b;
+  
+  if (op == '-')
+    return a - b;
+  
+  if (op == '*')
+    return a * b;
+  
+  if (op == '/')
+    return a / b;
+  
+}
+
+function calc(expr) {
+  
+  var operators = [ '-', '+', '*', '/' ], stack = [];
+  
+  if (expr === undefined || expr.length == 0)
+    return 0;
+  
+  expr = expr.split(" ");  
+  
+  for (var i = 0; i < expr.length; i++)
+  {
+    if (operators.indexOf(expr[i]) >= 0)
+    {
+      var a = stack.pop(), b = stack.pop();
+      
+      stack.push(doOp(b, a, expr[i]));      
+    }
+    else
+      stack.push(expr[i]);
+  }
+  
+  return parseFloat(stack.pop());
+}

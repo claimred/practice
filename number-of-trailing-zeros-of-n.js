@@ -14,3 +14,26 @@ that has 2 trailing zeros 4790016(00)
 
 Be careful 1000! has length of 2568 digital numbers.
 */
+
+function zeros (n) {
+  var a = [], b = [];
+  var z = 0;
+  
+  for (var i = 1; i <= n; i++)
+  {
+    if (i % 5 == 0)
+    {
+      var j = i;
+      
+      while (j % 5 == 0)
+      {
+        j = Math.floor(j / 5);
+        z++
+      }
+      
+    }
+    
+  }
+  
+  return z;
+}

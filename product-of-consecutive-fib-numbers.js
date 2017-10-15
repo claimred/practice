@@ -125,3 +125,25 @@ http://en.wikipedia.org/wiki/Fibonacci_number
 
 http://oeis.org/A000045
 */
+
+function productFib(prod){
+  
+  var a = 0, b = 1;
+  
+  while (true){
+
+    if (a * b > prod)
+      return [a, b, false];  
+  
+    if (a * b == prod)
+      return [a, b, true];
+     
+    
+    
+    var c = a + b;
+    a = b;
+    b = c;
+    
+    
+  }
+}

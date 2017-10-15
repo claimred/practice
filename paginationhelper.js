@@ -105,3 +105,59 @@ helper.PageIndex(2); //should == 0
 helper.PageIndex(20); //should == -1
 helper.PageIndex(-10); //should == -1
 ```*/
+
+// TODO: complete this object/class
+
+// The constructor takes in an array of items and a integer indicating how many
+// items fit within a single page
+function PaginationHelper(collection, itemsPerPage){
+  this.itemspp = itemsPerPage;
+  this.collection = collection;
+}
+
+// returns the number of items within the entire collection
+PaginationHelper.prototype.itemCount = function() {
+  return this.collection.length;
+}
+
+// returns the number of pages
+PaginationHelper.prototype.pageCount = function() {
+  
+  var v = Math.floor(this.collection.length / this.itemspp); 
+  
+  if (this.collection.length % this.itemspp != 0)
+    v++;
+  
+  return v;
+}
+
+// returns the number of items on the current page. page_index is zero based.
+// this method should return -1 for pageIndex values that are out of range
+PaginationHelper.prototype.pageItemCount = function(pageIndex) {
+  
+  var n = this.pageCount();
+  
+  if (pageIndex < 0 || pageIndex >= n)
+    return -1;
+  
+  if (pageIndex == n - 1)
+  {    
+    if (this.collection.length % this.itemspp != 0)
+      return this.collection.length - Math.floor(this.collection.length / this.itemspp) * this.itemspp;
+    else
+      return this.itemspp;
+  }
+  
+  return this.itemspp;
+}
+
+// determines what page an item is on. Zero based indexes
+// this method should return -1 for itemIndex values that are out of range
+PaginationHelper.prototype.pageIndex = function(itemIndex) {
+  if (itemIndex >= this.collection.length || itemIndex < 0)
+      return -1;
+    
+  return Math.floor(itemIndex / this.itemspp);
+  
+    
+}

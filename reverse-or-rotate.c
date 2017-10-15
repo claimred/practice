@@ -22,3 +22,72 @@ revrot("", 8) --> ""
 revrot("123456779", 0) --> "" 
 revrot("563000655734469485", 4) --> "0365065073456944"
 ```*/
+
+int checkCondition( char *s, int n )
+{
+   int sum = 0;
+
+   for (int i = 0; i < n; i++)
+   {
+      int k = s[i] - '0';
+
+      k = k * k * k;
+      sum += k;
+   }
+
+   if (sum % 2 == 0)
+      return 1;
+   
+   return 0;
+}
+
+void reverseString( char *s, int n )
+{
+   for (int i = 0; i < n / 2; i++)
+   {
+      char c;
+
+      c = s[i];
+      s[i] = s[n - i - 1];
+      s[n - i - 1] = c;
+   }
+}
+
+void rotateUnit( char *s, int n )
+{
+   char c = s[0];
+
+   for (int i = 0; i < n - 1; i++)
+      s[i] = s[i + 1];
+
+   s[n - 1] = c;
+}
+
+
+char *revrot( char* s, int sz ) 
+{
+   int n = strlen(s), z;
+   
+   if (sz <= 0 || sz > n)
+   {
+      s[0] = 0;
+      return s;
+   }
+
+   z = n / sz;
+
+   for (int i = 0; i < z; i++)
+   {
+      char *cur = s + i * sz;
+
+      if (checkCondition(cur, sz))
+         reverseString(cur, sz);
+      else
+         rotateUnit(cur, sz);
+   }
+
+   if (n % sz != 0)
+      s[z * sz] = 0;
+  
+   return s;
+}

@@ -13,3 +13,27 @@ Along with opening (`(`) and closing (`)`) parenthesis, input can contain any va
 
 <b>Note</b>: In the JavaScript and Go version of this Kata, input will <i>only</i> contain opening and closing parenthesis and <i>will not</i> be an empty string.
 */
+
+function validParentheses(parens)
+{
+  var stack = [];
+  
+  for (i = 0; i < parens.length; i++)
+  {
+    if (parens[i] === '(')
+      stack.push(parens[0]);
+    
+    if (parens[i] === ')')
+    {
+      if (stack.length == 0)
+        return false;
+      
+      stack.pop();
+    }
+  }
+  
+  if (stack.length != 0)
+    return false;
+  
+  return true;
+}

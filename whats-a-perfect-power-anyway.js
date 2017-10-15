@@ -50,3 +50,35 @@ isPP(4) => 2 2
 isPP(9) => 3 2
 isPP(5) => NULL
 ```*/
+
+var isPP = function(n)
+{
+  var p = Math.sqrt(n), k = 0, t, m;
+  
+  for (var i = 2; i <= p; i++)
+  {
+    m = i;
+    
+    if (n % i == 0)
+    {
+      t = n;
+      k = 1;
+      
+      while (true)
+      {
+        t /= i;
+        
+        if (t == 1)
+          return [m, k];
+        
+        if (t % i != 0)
+          break;
+        else
+          k++;
+      }
+    }
+    
+  }
+  
+  return null;
+}

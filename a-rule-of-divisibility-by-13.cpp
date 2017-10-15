@@ -34,3 +34,49 @@ Call `thirt` the function which processes this sequence of operations on an inte
 `thirt(1234567)` calculates 178, then 87, then 87 and returns `87`.
 
 `thirt(321)` calculates 48, 48 and returns `48`*/
+
+#include <string>
+
+class Thirteen
+{
+public:
+    static long long thirt(long long n)
+    {
+       int magic[] = { 1, 10, 9, 12, 3, 4 }, k = 0, j = 0;
+       long long res = 0;
+       int old_sum = -1;
+
+
+       while (true)
+       {
+          int sum = 0;
+          std::string s = std::to_string(n);
+
+          for (int i = s.size() - 1; i >= 0; i--)
+          {
+             int z = s[i] - '0';
+
+             sum += z * magic[j];
+
+             j++;
+
+             if (j > 5)
+                j = 0;
+          }
+
+          if (sum != old_sum)
+          {
+             old_sum = sum;
+             n = sum;
+             j = 0;
+          }
+          else
+          {
+             res = n;
+             break;
+          }
+       }
+
+       return res;
+    }
+};

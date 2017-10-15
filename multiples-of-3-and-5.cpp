@@ -7,3 +7,17 @@ Finish the solution so that it returns the sum of all the multiples of 3 or 5 **
   
 ###### *Courtesy of ProjectEuler.net*
 */
+
+int solution(int number) 
+{
+  int res = 0;
+  
+  for (int i = 1; i < number; i++)
+  {
+    if (i % 3 == 0 || i % 5 == 0)
+      res += i;
+  }
+  
+  return res;
+
+}

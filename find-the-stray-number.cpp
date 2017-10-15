@@ -11,3 +11,12 @@ Examples:
 
 [17, 17, 3, 17, 17, 17, 17] => 3
 */
+
+int stray(std::vector<int> numbers) {
+   int k = 0;
+
+   while (numbers[k] == numbers[k + 1])
+      k++;
+
+   return numbers[k + 1];
+};

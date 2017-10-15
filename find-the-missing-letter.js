@@ -17,3 +17,28 @@ Example:
 Have fun coding it and please don't forget to vote and rank this kata! :-) 
 
 I have also created other katas. Take a look if you enjoyed this kata!*/
+
+function nextChar(c) {
+    return String.fromCharCode(c.charCodeAt(0) + 1);
+}
+
+function findMissingLetter(array)
+{
+  var res = "";
+  
+  array.forEach( function(item, index, array) {
+    n = array.length;
+        
+    if (index == n - 1)
+      return;
+    
+    var c = nextChar(item);    
+    
+    
+    
+    if (array[index + 1] != c)
+      res = c;
+  });
+  
+  return res;
+}

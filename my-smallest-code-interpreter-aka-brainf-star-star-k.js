@@ -23,3 +23,102 @@ The function will take in input...
 For BF: The code and input are separated by `'!'`.
 ~~~
 */
+
+function fillBrackets(code)
+{
+  var stack = [],
+      map = new Map();
+
+  var a = -1, b = -1;
+      
+  for (var i = 0; i < code.length; i++)
+  {
+    if (code[i] == '[')
+      stack.push(i);
+    
+    if (code[i] == ']')
+    {
+      var s = stack.pop();
+      
+      map[s] = i;
+      map[i] = s;
+    }    
+  }
+  
+  return map;
+}
+
+
+function brainLuck(code, input) 
+{
+  code = code.split("");
+  
+  var output = [], pointer = 0, cpointer = 0;
+  var data = [];
+  
+  //"infinite array", should be dynamic
+  for (var i = 0; i < 100; i++)
+    data[i] = String.fromCharCode(0);  
+  
+  var brackets = fillBrackets(code);    
+  
+  for (var i = 0; i < code.length; i++)
+  {    
+    switch (code[i])
+    {
+    case ',':      
+      data[pointer] = input[cpointer];      
+      cpointer++;
+      break;
+    case '.':
+      output.push(data[pointer]);
+      break;
+    case '+':    
+      var t = data[pointer].charCodeAt(0) + 1;
+      
+      if (t > 255)
+        t = 0;
+    
+      data[pointer] = String.fromCharCode(t);
+     
+      break;
+    case '-':
+      var t = data[pointer].charCodeAt(0) - 1;
+      
+      if (t < 0)
+        t = 255;
+    
+      data[pointer] = String.fromCharCode(t);
+     
+      break;
+    case '[':
+      if (data[pointer] == String.fromCharCode(0))
+      {
+        i = brackets[i];
+       
+      }
+      break;
+    case ']':
+      if (data[pointer] != String.fromCharCode(0))
+      {
+        i = brackets[i];
+       
+      }
+      break;
+      
+    case '>':
+      pointer++;
+      break;
+    
+    case '<':
+      pointer--;
+      break            
+      
+    default:
+      return "";
+      
+    }        
+  } 
+  
+  return output.join("");
+}

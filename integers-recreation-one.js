@@ -20,3 +20,50 @@ list_squared(42, 250) --> [[42, 2500], [246, 84100]]
 The form of the examples may change according to the language, see `Example Tests:` for more details.
 
 */
+
+function findDivisors(n)
+{
+  var divisors = [];
+  
+  for (var i = 1; i <= n; i++)
+  {
+    if (n % i == 0)
+      divisors.push(i);
+  }
+  
+  return divisors;
+}
+
+function divisorsSum(l)
+{
+  var res = 0;
+  
+  for (var i = 0; i < l.length; i++)
+    res += l[i] * l[i];
+  
+  return res;
+}
+
+function isFullSquare(n)
+{
+  var sqr = Math.sqrt(n);
+  
+  sqr = Math.floor(sqr);
+
+  return sqr * sqr == n;  
+}
+
+function listSquared(m, n) 
+{
+  var ret = [];
+  
+  for (var i = m; i <= n; i++)
+  {    
+    var sum = divisorsSum(findDivisors(i));
+    
+    if (isFullSquare(sum))
+      ret.push([i, sum]);       
+  }
+  
+  return ret;  
+}

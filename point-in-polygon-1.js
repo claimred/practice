@@ -26,3 +26,70 @@ then you'll see:
 <div style="background:white; width:140px"><svg width="140" ,="" height="140"><polygon points="20.5,20.5 120.5,20.5 70.5,120.5" stroke="blue" fill="white"></polygon><circle cx="70" cy="70" r="2" fill="green"></circle></svg></div>
 
 The drawing window is 14x14 units wide and centered at the origin.*/
+
+function findIntersection(a, b, point)
+{
+  var t = (point[1] - a[1]) * (b[0] - a[0]);
+  
+  return a[0] + t / (b[1] - a[1]);  
+}
+
+function pointInPoly(poly, point) 
+{
+  console.log(poly);
+  console.log(point);
+  var maxp = [0, 0], minp = [0, 0];
+  
+  for (var i = 0; i < poly.length; i++)
+  {
+    if (poly[i][0] > maxp[0])
+      maxp[0] = poly[i][0];
+    
+    if (poly[i][1] > maxp[1])
+      maxp[1] = poly[i][1];
+    
+    if (poly[i][0] < minp[0])
+      minp[0] = poly[i][0];
+    
+    if (poly[i][1] < minp[1])
+      minp[1] = poly[i][1];    
+  }
+  
+  if (point[0] < minp[0] || point[1] < minp[1] || point[0] > maxp[0] || point[1] > maxp[1])
+    return false;
+  
+  var num = 0;
+  
+  for (var i = 0; i < poly.length - 1; i++)
+  {
+    var a = poly[i], b = poly[i + 1];
+    
+    if ((point[1] < a[1] && point[1] > b[1]) ||
+        (point[1] > a[1] && point[1] < b[1]))
+    {
+      var d = findIntersection(a, b, point);
+      
+      if (point[0] < d)
+        num++;
+    }
+  }
+  
+  var a = poly[poly.length - 1], b = poly[0];
+  
+  //equality between float values is wrong
+  if ((point[1] <= a[1] && point[1] >= b[1]) ||
+      (point[1] >= a[1] && point[1] <= b[1]))
+  {
+    var d = findIntersection(a, b, point);
+    
+    if (point[0] < d)
+      num++;
+  }
+
+  console.log(num);
+  
+  if (num % 2 == 0)
+    return false;    
+  
+  return true;
+}

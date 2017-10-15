@@ -68,3 +68,36 @@ Good luck!
 
 After you complete this kata, you may try yourself at <a href="http://www.codewars.com/kata/decode-the-morse-code-advanced">Decode the Morse code, advanced</a>.
 */
+
+decodeMorseWord = function(morseWord)
+{
+  var t = morseWord.split(" "), res = "";
+    
+  
+  for (var i = 0; i < t.length; i++)
+  {    
+    var v = MORSE_CODE[t[i]];
+      
+    res += v;
+  }
+        
+  return res;
+}
+
+
+decodeMorse = function(morseCode) 
+{
+  morseCode = morseCode.replace(/^\s+|\s+$/g, "");
+  var words = morseCode.split("   "), res = "";
+  
+  for (var i = 0; i < words.length; i++)
+  {  
+    var v = decodeMorseWord(words[i]);    
+    
+    res += v + " ";
+  }
+    
+  res = res.slice(0, -1);
+  
+  return res;
+}

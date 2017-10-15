@@ -43,3 +43,59 @@ e.g.
 (-16).twos(5) == "10000";
 ```
 */
+
+function maxBitVal(n) 
+{
+  var res = 0;
+  
+  for (var i = 0; i < n; i++)
+  {
+    res += Math.pow(2, i);
+  }
+  
+  return res;
+}
+
+Number.prototype.twos = function(n) 
+{
+  var val = this.valueOf(), res = new String(), 
+      sign;
+
+  if (val < 0)
+  {
+    val = -val;
+    sign = -1;
+  }
+  else
+    sign = 1;
+    
+  if (sign > 0)
+  {
+    for (var i = 0; i < n; i++)
+    {
+      var c = val % 2;
+      
+      res = c + res;    
+      val = Math.floor(val / 2);    
+    }
+  }
+  else
+  {
+    var maxval = (maxBitVal(n) + 1) / 2;
+            
+    var dist = maxval - val;
+    
+    
+    for (var i = 0; i < n - 1; i++)
+    {
+      var c = dist % 2;
+      
+      res = c + res;    
+      dist = Math.floor(dist / 2);    
+    }
+    
+    res = "1" + res;
+  }
+  
+  return res;
+}

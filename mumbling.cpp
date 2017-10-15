@@ -90,3 +90,30 @@ accum("cwAt")
 ```
 The parameter of accum is a string which includes only letters from `a..z` and `A..Z`.
 */
+
+class Accumul
+{
+public:
+    static std::string accum(const std::string &s)
+    {
+        int n = s.size(), z = 0, m = 0;
+       std::string res;
+
+       m = (n * (n + 1)) / 2 + n - 1;
+       res.resize(m);
+
+       for (int i = 0; i < n; i++)
+       {          
+          res[z++] = toupper(s[i]);
+
+          for (int k = 0; k < i; k++, z++)
+            res[z] = tolower(s[i]);
+
+          if (z < m)
+            res[z++] = '-';        
+       }
+
+       return res;
+    }
+    
+};

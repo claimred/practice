@@ -62,3 +62,75 @@ Wikipedia has an explanation of the two properties that can be used to solve the
 - [First property](http://en.wikipedia.org/wiki/Longest_common_subsequence_problem#First_property)
 - [Second property](http://en.wikipedia.org/wiki/Longest_common_subsequence_problem#Second_property)
 */
+
+function LCS(x, y) {
+  
+  var n1 = x.length + 1, n2 = y.length + 1,
+      m = new Array(n1);
+  
+  for (var i = 0; i < n1; i++)
+    m[i] = new Array(n2);
+  
+  for (var i = 0; i < n1; i++)
+    m[i][0] = { val: 0, dir: -1 };
+  
+  for (var i = 0; i < n2; i++)
+    m[0][i] = { val: 0, dir: -1 };
+     
+  for (var i = 1; i < n1; i++)
+  {
+    for (var j = 1; j < n2; j++)
+    {
+      if (x[i - 1] == y[j - 1])
+        m[i][j] = { val: m[i - 1][j - 1].val + 1, dir: 0 };
+      else
+      {
+        var a = m[i - 1][j].val, b = m[i][j - 1].val;
+        
+        if (a >= b)
+          m[i][j] = { val: a, dir: 1 };
+        else
+          m[i][j] = { val: b, dir: 2 };
+      }
+    }
+  }    
+  
+  i = n1 - 1, j = n2 - 1;
+  
+  if (m[i][j].val == 0)
+    return "";
+  
+  var res = "";
+  
+  var chooseDir = function(dir) {
+    switch (dir)
+    {
+    case 0:
+      return [-1, -1]
+    case 1:
+      return [-1,  0];
+    case 2:
+      return [0,  -1];     
+    }
+    
+    return [0, 0];
+  };
+  
+  var dir;    
+  
+  while (i > 0 && j > 0)
+  {
+    dir = chooseDir(m[i][j].dir);        
+           
+    if (m[i + dir[0]][j + dir[1]].val < m[i][j].val)
+    {
+      res += y[j - 1];
+    }
+    
+    i += dir[0], j += dir[1];
+  }
+  
+  res = res.split("").reverse().join("");
+
+  return res;
+}
