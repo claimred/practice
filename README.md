@@ -2,7 +2,7 @@
 accepted codewars.com solutions
 
 
-~~~~
+```javascript
 //initial fetching solution
 //generate-slug-filenames.js
 
@@ -68,6 +68,6 @@ getData(process.argv.slice(2)[0])
 
 
 
-~~~~
+```
 
 
