@@ -61,6 +61,10 @@ int solution(vector<int> &A) {
       if (k % 2 != 0)
          return val;
    }
+
+
+
+
  
    return -1;
 }
